@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>My Parse App</title>
+  <title>SI Sign in</title>
   <meta name="description" content="My Parse App">
   <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" href="css/reset.css">
@@ -14,48 +14,43 @@
 <body>
   
   <div id="main">
-    <h1>You're ready to use Parse!</h1>
-
-    <p>Read the documentation and start building your JavaScript app:</p>
-
-    <ul>
-      <li><a href="https://www.parse.com/docs/js_guide">Parse JavaScript Guide</a></li>
-      <li><a href="https://www.parse.com/docs/js">Parse JavaScript API Documentation</a></li>
-    </ul>
+    
+    <form name="myForm" action="demo_form.asp" onsubmit="return inputData()" method="post">
+    YourFirstName YourLastName YourIDNumber: <input type="text" name="personInfo" required>
+    SIFirstName SILastName MM/DD/YYYY: <input type="text" name="SIData" required>
+    <input type="submit" value="Submit">
+    </form>
 
     <div style="display:none" class="error">
-      Looks like there was a problem saving the test object. Make sure you've set your application ID and javascript key correctly in the call to <code>Parse.initialize</code> in this file.
+      <p>Error</p>
     </div>
 
     <div style="display:none" class="success">
-      <p>We've also just created your first object using the following code:</p>
-      
-        <code>
-          var TestObject = Parse.Object.extend("TestObject");<br/>
-          var testObject = new TestObject();<br/>
-          testObject.save({foo: "bar"});
-        </code>
+      <p>Successfully added your information</p>
     </div>
   </div>
 
   <script type="text/javascript">
-    Parse.initialize("4XGCLdukfk7n6LDNEOCOMpavCbVmy4dt21V9XS9Z", "3VdIKRpQ716rYVsfKoTH3DLofeGAIrM1SSSglUHx");
-    
-    var TestObject = Parse.Object.extend("TestObject");
-    var testObject = new TestObject();
-    testObject.save({foo: "bar"}).then(function(object) {
-    alert("yay! it worked");
-    });
+    function inputData(){
+      Parse.initialize("tsE9kSexhlGnOngbVcPyp3eHeV9tkpxFjTXmjpYT", "wrH20QPtHRJksNhUq9eXWBhOhFU6bgCbWnSbCYBH");
+      
+      var personInfo = document.forms["myForm"]["personInfo"].value;
+      var SIData = document.forms["myForm"]["SIData"].value;
 
-    var TestObject = Parse.Object.extend("TestObject");
-    var testObject = new TestObject();
-      testObject.save({foo: "bar"}, {
+      SIData = SIData.replace(" ", "_")
+      SIData = SIData.replace("/", "_")
+
+      var SIObject = Parse.Object.extend("SI_Sign_in");
+      var SIObject = new SIObject();
+      SIObject.save({SIData: personInfo}, {
       success: function(object) {
         $(".success").show();
       },
       error: function(model, error) {
         $(".error").show();
       }
+
+    }
     });
   </script>
 </body>
