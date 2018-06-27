@@ -1,5 +1,5 @@
 /*
-	Broadcast by TEMPLATED
+	Full Motion by TEMPLATED
 	templated.co @templatedco
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 */
@@ -16,7 +16,7 @@
 
 	$(function() {
 
-		var	$window = $(window),
+		var $window = $(window),
 			$body = $('body');
 
 		// Disable animations/transitions until the page has loaded.
@@ -30,27 +30,6 @@
 
 		// Fix: Placeholder polyfill.
 			$('form').placeholder();
-
-		// Prioritize "important" elements on medium.
-			skel.on('+medium -medium', function() {
-				$.prioritize(
-					'.important\\28 medium\\29',
-					skel.breakpoint('medium').active
-				);
-			});
-
-		// Menu.
-			$('#menu')
-				.append('<a href="#menu" class="close"></a>')
-				.appendTo($body)
-				.panel({
-					delay: 500,
-					hideOnClick: true,
-					hideOnSwipe: true,
-					resetScroll: true,
-					resetForms: true,
-					side: 'right'
-				});
 
 		// Banner.
 			var $banner = $('#banner');
@@ -105,42 +84,34 @@
 
 			}
 
-		// Tabbed Boxes
+		// Scrolly.
+			$('.scrolly').scrolly();
 
-			$('.flex-tabs').each( function() {
+		// Poptrox.
+			$window.on('load', function() {
 
-				var t 		= jQuery(this),
-					tab 	= t.find('.tab-list li a'),
-					tabs 	= t.find('.tab');
+				var $thumbs = $('.thumbnails');
 
-				tab.click(function(e) {
-
-					var x = jQuery(this),
-						y = x.data('tab');
-
-					// Set Classes on Tabs
-						tab.removeClass('active');
-						x.addClass('active');
-
-					// Show/Hide Tab Content
-						tabs.removeClass('active');
-						t.find('.' + y).addClass('active');
-
-					e.preventDefault();
-
-				});
+				if ($thumbs.length > 0)
+					$thumbs.poptrox({
+						onPopupClose: function() { $body.removeClass('is-covered'); },
+						onPopupOpen: function() { $body.addClass('is-covered'); },
+						baseZIndex: 10001,
+						useBodyOverflow: false,
+						overlayColor: '#222226',
+						overlayOpacity: 0.75,
+						popupLoaderText: '',
+						fadeSpeed: 500,
+						usePopupDefaultStyling: false,
+						windowMargin: (skel.breakpoint('small').active ? 5 : 50)
+					});
 
 			});
 
-		// Scrolly.
-			if ( $( ".scrolly" ).length ) {
-
-				var $height = $('#header').height();
-
-				$('.scrolly').scrolly({
-					offset: $height
-				});
-			}
+		// Initial scroll.
+			$window.on('load', function() {
+				$window.trigger('scroll');
+			});
 
 	});
 
