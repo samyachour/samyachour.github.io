@@ -7,6 +7,14 @@
   </url>
   
   <url>
+    <loc>https://samyachour.github.io/posts/test-post2/</loc>
+  </url>
+  
+  <url>
+    <loc>https://samyachour.github.io/posts/test-post3/</loc>
+  </url>
+  
+  <url>
     <loc>https://samyachour.github.io/categories/</loc>
     <priority>0</priority>
   </url>
